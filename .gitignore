@@ -10,5 +10,4 @@
 /vendor/
 /web/bundles/
 /nbproject/
-/composer.lock
 /app/Resources/bundles/*
