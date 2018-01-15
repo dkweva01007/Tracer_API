@@ -1,0 +1,67 @@
+# This file is a "template" of what your parameters.yml file should look like
+# Set parameters here that may be different on each deployment target of the app, e.g. development, staging, production.
+# http://symfony.com/doc/current/best_practices/configuration.html#infrastructure-related-configuration
+parameters:
+    database_host:     ec2-54-235-252-137.compute-1.amazonaws.com
+    database_port:     5432
+    database_name:     d278kn5jm007h
+    database_user:     jtapinkmmnegph
+    database_password: fbf630b21e41ef3c1c20b25705c73cbcdcffccafe377066af5e4b79c8dd0b384
+
+    database_name2:     dakota_login
+    database_user2:     root
+    database_password2: ~
+
+    database_host2:     127.0.0.1
+    database_port2:     ~
+    database_name3:     dakota_login
+    database_user3:     root
+    database_password3: ~
+    mailer_transport:  smtp
+    mailer_host:       ssl0.ovh.net
+    mailer_port:        587
+    mailer_user:       sender@cap-adrenaline.com
+    mailer_encryption: tls
+    mailer_password:   hjPi7CAGHOMp
+
+    # for send a mail backup for safety
+    mail_backup: "Maildakotabox2@gmail.com"
+
+    # You send the mail in debug mode for Swiftmailer
+    mailer_debug: "%mailer_develloper%"
+    mailer_develloper: "johann.marie-reine@cap-adrenaline.com"
+    mailer_logs: ["%mailer_develloper%", "nicolas.menard@dakotabox.fr"]
+
+    # A secret key that's used to generate certain security-related tokens
+    secret:            ThisTokenIsNotSoSecretChangeIt
+    # For access API DOC
+    admin_password: 'bf04*2ca5F4?6f0971'
+
+    # option for enable for SMS
+    SMSenable: true
+
+    SMSaccount: "sms-wm8793-1"
+    SMSlogin: "smsbook"
+    SMSpwd: "DakotA15"
+    SMSfrom: "capad.re"
+
+    oauth2_server:       'https://booking.boomysite.com/oauth/v2/token'
+    oauth2_client_id:       2_bfmtqbv6zcgs8cs4g8kkc8gckkkgw40ocwogo000gcgcgwk8w
+    oauth2_client_secret:   zetdxqg10w048g4g8w8k40ow88wwossg0wgwcc0s44c8s00s4
+
+    himself: "https://booking.boomysite.com"
+    api_folder: "http://backend.boomysite.com"
+
+    CAPPIM_oauth: 'http://boomysite.com/oauth/token'
+    CAPPIM_client: d057132f9ce9484aa475b205d2e76165dae50019af71a6f9b2ce55e8b119999e
+    CAPPIM_secret: c53c4f907844207460a81d8d06a7bd027edf08f730425080a3e7fda0210a2610
+    CAPPIM_url: 'http://boomysite.com/api/v2/'
+
+    # Weembi
+    weembi_token: 'XXXXXX'
+    weembi_url: 'XXXXXX'
+    weembi_id_etat: 0
+
+    secret_partenaire: 'jozETbqsp52MSDFwI94psiofdgnmlskqgzseTdkFjklzesfdhseurdl'
+    tva_commission: 1.2
+    custom_logs_dir: /var/log/cap-adrenaline/booking

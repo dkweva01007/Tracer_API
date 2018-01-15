@@ -1,0 +1,15 @@
+services:
+    db.revival:
+        class: DB\ServiceBundle\Controller\RevivalController
+        calls: 
+            - [setContainer, ["@service_container", "@http_kernel"]]
+
+    twig.extension.stringloader:
+        class: Twig_Extension_StringLoader
+        tags:
+         - { name: twig.extension }
+         
+    db.reservation:
+        class: DB\ServiceBundle\Controller\ReservationController
+        calls: 
+            - [setContainer, ["@service_container", "@http_kernel"]]

@@ -1,0 +1,23 @@
+image: docker:dind
+
+options:
+  docker: true
+
+pipelines:
+  branches:
+    docker:
+      - step:
+          caches:
+            - pip
+          script:
+            - export ENVIRONMENT="prd"
+            - export IMAGE_NAME="${REPOSITORY_URI}/${SERVICE_NAME}"
+            - nohup /usr/local/bin/dockerd --host=unix:///var/run/docker.sock --host=tcp://0.0.0.0:2375 --storage-driver=overlay&
+            - timeout -t 15 sh -c "until docker info; do echo .; sleep 1; done"
+            - docker --version
+            - apk add --no-cache --update python3
+            - pip3 install awscli
+            - pip3 install ecs-deploy
+            - $(aws ecr get-login --no-include-email)
+            - docker pull "${IMAGE_NAME}:${ENVIRONMENT}" || echo ""
+            - docker build --cache-from "${IMAGE_NAME}:${ENVIRONMENT}" --tag "${IMAGE_NAME}:${BITBUCKET_COMMIT}" --tag "${IMAGE_NAME}:${ENVIRONMENT}" --build-arg BITBUCKET_KEY="${BITBUCKET_KEY}" --build-arg BITBUCKET_SECRET="${BITBUCKET_SECRET}" .

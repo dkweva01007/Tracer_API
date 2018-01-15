@@ -1,0 +1,15 @@
+db_user:
+    resource: "@DBUserBundle/Resources/config/routing.yml"
+    prefix:   /
+
+fos_oauth_server_token:
+    resource: "@FOSOAuthServerBundle/Resources/config/routing/token.xml"
+
+db_service:
+    type:     rest
+    resource: "@DBServiceBundle/Resources/config/routing.yml"
+    prefix:   /api/v1
+
+NelmioApiDocBundle:
+    resource: "@NelmioApiDocBundle/Resources/config/routing.yml"
+    prefix:   /api/doc

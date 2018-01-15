@@ -1,0 +1,39 @@
+security:
+
+    encoders:
+            FOS\UserBundle\Model\UserInterface: bcrypt
+
+    providers:
+        fos_userbundle:
+            id: fos_user.user_provider.username
+
+    firewalls:
+        dev:
+            pattern: ^/(_(profiler|wdt)|css|images|js)/
+            security: false        
+
+        healthcheck:
+            pattern:    ^/api/v1/healthcheck
+            security:   false
+        oauth_token:
+            pattern:    ^/oauth/v2/token
+            security:   false
+        XML:
+            pattern:   ^/api/v1/xml_reservations
+            fos_oauth:  false
+            stateless:  false
+            anonymous:  true
+        api:
+            pattern:   ^/api/v1
+            fos_oauth:  true
+            stateless:  true
+            anonymous:  false
+        api_doc:
+            pattern:    ^/api/doc$
+            anonymous: false
+            http_basic:
+                provider: fos_userbundle
+
+    access_control:
+        - { path: ^/api/doc, role: ROLE_SUPER_ADMIN }
+        - { path: fos_user_security_logout, roles: IS_AUTHENTICATED_ANONYMOUSLY }
