@@ -4,22 +4,30 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "4f8f92e189c5290b26436a193c7c70a9",
-    "content-hash": "62b2c48ecb5d28e0957bc6d0bdb77400",
+    "hash": "36f93330940ac05b126652279ea9cbdb",
+    "content-hash": "9d8aeed8a2caa582eedd42d02d9b0b62",
     "packages": [
         {
             "name": "Dakotabox/UserBundle",
-            "version": "1.0",
+            "version": "v2",
             "target-dir": "DB/UserBundle/",
             "source": {
                 "type": "git",
-                "url": "git@bitbucket.org:capateam/userbundle.git",
-                "reference": "fa514929370a4f02f77dacda2c9817890dd153fe"
+                "url": "https://github.com/dkweva01007/UserBundle.git",
+                "reference": "18872d831cae8a00436d6f9217498337e14f316b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/dkweva01007/UserBundle/zipball/18872d831cae8a00436d6f9217498337e14f316b",
+                "reference": "18872d831cae8a00436d6f9217498337e14f316b",
+                "shasum": ""
             },
             "require": {
                 "friendsofsymfony/oauth-server-bundle": "1.4.2",
                 "friendsofsymfony/user-bundle": "v1.3.6",
-                "incenteev/composer-parameter-handler": "~2.0"
+                "gedmo/doctrine-extensions": "v2.4.33",
+                "incenteev/composer-parameter-handler": "~2.0",
+                "stof/doctrine-extensions-bundle": "v1.2.1"
             },
             "require-dev": {
                 "symfony/phpunit-bridge": "~2.7"
@@ -28,7 +36,8 @@
             "extra": {
                 "branch-alias": {
                     "master": "master",
-                    "1.0": "1.0"
+                    "1.0": "1.0",
+                    "1.1": "1.1"
                 }
             },
             "autoload": {
@@ -51,7 +60,11 @@
                 "oauth2",
                 "server"
             ],
-            "time": "2016-08-23 08:49:17"
+            "support": {
+                "source": "https://github.com/dkweva01007/UserBundle/tree/v2",
+                "issues": "https://github.com/dkweva01007/UserBundle/issues"
+            },
+            "time": "2018-01-15 16:40:59"
         },
         {
             "name": "beberlei/DoctrineExtensions",
