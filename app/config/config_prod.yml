@@ -24,7 +24,7 @@ monolog:
             members: [nested,buffered]
         nested:
             type:  stream
-            path:  "%custom_logs_dir%/%kernel.environment%.log"
+            path: "%kernel.logs_dir%/%kernel.environment%.log"
             level: debug
         console:
             type:  console
