@@ -37,4 +37,4 @@ monolog:
             to_email:   "%mailer_develloper%"
             subject:    An Error Occurred!
             level:      debug
-            path:   "%custom_logs_dir%/%kernel.environment%.log"
+            path: "%kernel.logs_dir%/%kernel.environment%.log"
