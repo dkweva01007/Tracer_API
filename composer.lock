@@ -4,22 +4,22 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "36f93330940ac05b126652279ea9cbdb",
-    "content-hash": "9d8aeed8a2caa582eedd42d02d9b0b62",
+    "hash": "cb3787d96941642bee41c84ce449f595",
+    "content-hash": "c094fa1ae925946d933950b027a8dea8",
     "packages": [
         {
             "name": "Dakotabox/UserBundle",
-            "version": "v2",
+            "version": "dev-master",
             "target-dir": "DB/UserBundle/",
             "source": {
                 "type": "git",
                 "url": "https://github.com/dkweva01007/UserBundle.git",
-                "reference": "18872d831cae8a00436d6f9217498337e14f316b"
+                "reference": "17b5a111a5032648efae0dcd98cd05f42b8feaf1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dkweva01007/UserBundle/zipball/18872d831cae8a00436d6f9217498337e14f316b",
-                "reference": "18872d831cae8a00436d6f9217498337e14f316b",
+                "url": "https://api.github.com/repos/dkweva01007/UserBundle/zipball/17b5a111a5032648efae0dcd98cd05f42b8feaf1",
+                "reference": "17b5a111a5032648efae0dcd98cd05f42b8feaf1",
                 "shasum": ""
             },
             "require": {
@@ -61,10 +61,10 @@
                 "server"
             ],
             "support": {
-                "source": "https://github.com/dkweva01007/UserBundle/tree/v2",
+                "source": "https://github.com/dkweva01007/UserBundle/tree/tracer",
                 "issues": "https://github.com/dkweva01007/UserBundle/issues"
             },
-            "time": "2018-01-15 16:40:59"
+            "time": "2018-01-18 11:55:26"
         },
         {
             "name": "beberlei/DoctrineExtensions",
@@ -4963,7 +4963,9 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": [],
+    "stability-flags": {
+        "dakotabox/userbundle": 20
+    },
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
