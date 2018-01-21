@@ -13,3 +13,12 @@ Service_MissionType:
 Service_CurrentMission:
     type: rest
     resource: 'DB\ServiceBundle\Controller\CurrentMissionController'
+Service_CurrentQuest:
+    type: rest
+    resource: 'DB\ServiceBundle\Controller\CurrentQuestController'
+Service_Quest:
+    type: rest
+    resource: 'DB\ServiceBundle\Controller\QuestController'
+Service_Friend:
+    type: rest
+    resource: 'DB\ServiceBundle\Controller\FriendController'
