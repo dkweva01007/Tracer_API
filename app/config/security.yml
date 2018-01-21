@@ -30,10 +30,7 @@ security:
             anonymous:  true
         api_doc:
             pattern:    ^/api/doc$
-            anonymous: false
-            http_basic:
-                provider: fos_userbundle
+            anonymous: true
 
     access_control:
-        - { path: ^/api/doc, role: ROLE_SUPER_ADMIN }
         - { path: fos_user_security_logout, roles: IS_AUTHENTICATED_ANONYMOUSLY }
