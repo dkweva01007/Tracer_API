@@ -2,14 +2,14 @@
 
 namespace DB\ServiceBundle\Controller;
 
-use DB\ServiceBundle\Entity\Mission;
+use DB\ServiceBundle\Entity\Friend;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use DB\ServiceBundle\Controller\LogController;
 use Symfony\Component\HttpFoundation\Request;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use FOS\RestBundle\Controller\Annotations as Rest;
 
-class MissionController extends LogController {
+class FriendController extends LogController {
 
     public function getSecureResourceAction() {
         if (false === $this->get('security.context')->isGranted('IS_AUTHENTICATED_FULLY')) {
@@ -20,24 +20,24 @@ class MissionController extends LogController {
     /**
      * @ApiDoc(
      * resource=true,
-     *  description="Get a Mission instance",
-     *  output = "DB\ServiceBundle\Entity\Mission",
+     *  description="Get a Friend instance",
+     *  output = "DB\ServiceBundle\Entity\Friend",
      *  statusCodes = {
      *     200 = "Returned when successful",
      *     404 = "Returned when the User is not found"
      *   }
      * )
      * 
-     * Get all Profile instance
+     * Get all FriendC instance
      * @param int $id Id of the User
      * @return array User
      * @throws NotFoundHttpException when User not exist
      * 
      * @Rest\View()
      */
-    public function getMissionAction($id) {
+    public function getFriendAction($id) {
         $em = $this->getDoctrine()->getManager('service');
-        $entity = $em->getRepository('DBServiceBundle:Mission')->find($id);
+        $entity = $em->getRepository('DBServiceBundle:Friend')->find($id);
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find User entity');
         }
@@ -47,16 +47,16 @@ class MissionController extends LogController {
     /**
      * @ApiDoc(
      * resource=true,
-     *  description="Get all Mission instance",
-     *  output = "DB\ServiceBundle\Entity\Profile",
+     *  description="Get all Friend instance",
+     *  output = "DB\ServiceBundle\Entity\Friend",
      * filters={
      *      {"name"="order", "dataType"="string"},
      *      {"name"="sort_by", "dataType"="string"},
      *      {"name"="per_page", "dataType"="integer"},
      *      {"name"="page", "dataType"="integer"},
-     *      {"name"="idUser[]", "dataType"="int", "description"="User Id"},
-     *      {"name"="distance[]", "dataType"="float" , "description"="distance maked"},
-     *      {"name"="countMissionCount[]", "dataType"="int"}
+     *      {"name"="idUser1[]", "dataType"="int", "description"="User Id"},
+     *      {"name"="idUser2[]", "dataType"="int" , "description"="distance maked"},
+     *      {"name"="status[]", "dataType"="int"}
      *  },
      *  statusCodes = {
      *     200 = "Returned when successful",
@@ -73,10 +73,10 @@ class MissionController extends LogController {
      * 
      * @Rest\View()
      */
-    public function getMissionsAction(Request $request) {
+    public function getFriendsAction(Request $request) {
         $em = $this->getDoctrine()->getManager('service');
         if (sizeof($request->query->all()) == 0)
-            $entities = $em->getRepository('DBServiceBundle:Mission')->findBy(array());
+            $entities = $em->getRepository('DBServiceBundle:Friend')->findBy(array(), array('updated' => 'DESC'));
         else {
             $var = array();
             $limit = null;
@@ -106,10 +106,10 @@ class MissionController extends LogController {
                         break;
                 }
             }
-            $entities = $em->getRepository('DBServiceBundle:Mission')->my_findBy($var, $orderby, $limit, $offset);
+            $entities = $em->getRepository('DBServiceBundle:Friend')->my_findBy($var, $orderby, $limit, $offset);
         }
         if (!$entities) {
-            throw $this->createNotFoundException('No User found');
+            throw $this->createNotFoundException('No Friend found');
         }
         return $entities;
     }
@@ -117,17 +117,16 @@ class MissionController extends LogController {
     /**
      * @ApiDoc(
      * resource=true,
-     *  description="post a Mission instance",
-     *  output = "DB\UserBundle\Entity\Mission",
+     *  description="post a Friend instance",
+     *  output = "DB\UserBundle\Entity\Friend",
      *  statusCodes = {
      *     200 = "Returned when the request success",
      *     404 = "Returned when the account not found",
      *   },
      *  parameters={
-     *      {"name"="name", "dataType"="string", "required"=true, "description"="user ID"},
-     *      {"name"="distance", "dataType"="string", "required"=true, "description"="user ID"},
-     *      {"name"="special", "dataType"="int", "required"=false, "description"="user ID"},
-     *      {"name"="type", "dataType"="int", "required"=true, "description"="user ID"}
+     *      {"name"="userId1", "dataType"="int", "required"=true, "description"="user ID"},
+     *      {"name"="userId2", "dataType"="int", "required"=true, "description"="user ID"},
+     *      {"name"="status", "dataType"="int", "required"=true, "description"="user ID"}
      *  }
      * )
      * 
@@ -136,19 +135,29 @@ class MissionController extends LogController {
      * @return View|array
      * 
      */
-    public function postMissionAction(Request $request) {
+    public function postFriendAction(Request $request) {
         try {
             $em = $this->getDoctrine()->getManager('service');
 
-            $mission = new Mission();
-            $mission->setName($request->request->get('name'));
-            $mission->setSpecial($request->request->get('special'));
-            $mission->setType($request->request->get('type'));
-            $mission->setDistance($request->request->get('distance'));
-
-            $em->persist($mission);
+            $friend = new Friend();
+            $user1 = $em->getRepository('DBUserBundle:User')->find(
+                    $request->request->get('idUser1')
+            );
+            if (!$user1) {
+                throw $this->createNotFoundException('no\'t found User1');
+            }
+            $user2 = $em->getRepository('DBUserBundle:User')->find(
+                    $request->request->get('idUser2')
+            );
+            if (!$user2) {
+                throw $this->createNotFoundException('no\'t found User2');
+            }
+            $friend->setIdUser1($user1);
+            $friend->setIdUser2($user2);
+            $friend->setStatus($request->request->get('status', 0));
+            $em->persist($friend);
             $em->flush();
-            return $mission;
+            return $friend;
         } catch (\Doctrine\ORM\ORMException $e) {
             $loLogger = $this->get('logger');
             //$loLogger->critical($e->getMessage());
@@ -160,17 +169,16 @@ class MissionController extends LogController {
     /**
      * @ApiDoc(
      * resource=true,
-     *  description="put a Mission instance",
-     *  output = "DB\DBServiceBundle\Entity\Profile",
+     *  description="put a Friend instance",
+     *  output = "DB\DBServiceBundle\Entity\Friend",
      *  statusCodes = {
      *     200 = "Returned when the request success",
      *     404 = "Returned when the account not found",
      *   },
      *  parameters={
-     *       {"name"="name", "dataType"="string", "required"=true, "description"="user ID"},
-     *      {"name"="distance", "dataType"="string", "required"=true, "description"="user ID"},
-     *      {"name"="special", "dataType"="int", "required"=false, "description"="user ID"},
-     *      {"name"="type", "dataType"="int", "required"=true, "description"="user ID"}
+     *      {"name"="userId1", "dataType"="int", "required"=true, "description"="user ID"},
+     *      {"name"="userId2", "dataType"="int", "required"=true, "description"="user ID"},
+     *      {"name"="status", "dataType"="int", "required"=true, "description"="user ID"}
      *  }
      * )
      * 
@@ -179,22 +187,37 @@ class MissionController extends LogController {
      * @return View|array
      * 
      */
-    public function putMissionAction(Request $request, $id) {
+    public function putFriendAction(Request $request, $id) {
         try {
             $em = $this->getDoctrine()->getManager('service');
-            $mission = $em->getRepository('DBServiceBundle:Mission')->find($id);
-            if ($request->request->get('name'))
-                $mission->setName($request->request->get('name'));
-            if ($request->request->get('special'))
-                $mission->setSpecial($request->request->get('special'));
-            if ($request->request->get('type'))
-                $mission->setType($request->request->get('type'));
-            if ($request->request->get('distance'))
-                $mission->setDistance($request->request->get('distance'));
+            $friend = $em->getRepository('DBServiceBundle:Friend')->find($id);
+            if (!$friend) {
+                throw $this->createNotFoundException('no\'t found Friend');
+            }
+            if ($request->request->get('idUser1')) {
+                $user1 = $em->getRepository('DBUserBundle:User')->find(
+                        $request->request->get('idUser1')
+                );
+                if (!$user1) {
+                    throw $this->createNotFoundException('no\'t found User1');
+                }
+                $friend->setIdUser1($user1);
+            }
+            if ($request->request->get('idUser2')) {
+                $user2 = $em->getRepository('DBUserBundle:User')->find(
+                        $request->request->get('idUser2')
+                );
+                if (!$user2) {
+                    throw $this->createNotFoundException('no\'t found User2');
+                }
+                $friend->setIdUser2($user2);
+            }
+            if ($request->request->get('status', 0))
+                $friend->setStatus($request->request->get('status', 0));
 
-            $em->persist($mission);
+            $em->persist($friend);
             $em->flush();
-            return $mission;
+            return $friend;
         } catch (\Doctrine\ORM\ORMException $e) {
             $loLogger = $this->get('logger');
             //$loLogger->critical($e->getMessage());

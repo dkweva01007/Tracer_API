@@ -35,7 +35,7 @@ class CurrentMissionController extends LogController {
      * 
      * @Rest\View()
      */
-    public function getCurrentMissionAction($id) {
+    public function getCurrent_missionAction($id) {
         $em = $this->getDoctrine()->getManager('service');
         $entity = $em->getRepository('DBServiceBundle:CurrentMission')->find($id);
         if (!$entity) {
@@ -55,8 +55,8 @@ class CurrentMissionController extends LogController {
      *      {"name"="per_page", "dataType"="integer"},
      *      {"name"="page", "dataType"="integer"},
      *      {"name"="idUser[]", "dataType"="int", "description"="User Id"},
-     *      {"name"="distance[]", "dataType"="float" , "description"="distance maked"},
-     *      {"name"="countMissionCount[]", "dataType"="int"}
+     *      {"name"="idMission[]", "dataType"="int" , "description"="distance maked"},
+     *      {"name"="status[]", "dataType"="float"}
      *  },
      *  statusCodes = {
      *     200 = "Returned when successful",
@@ -73,7 +73,7 @@ class CurrentMissionController extends LogController {
      * 
      * @Rest\View()
      */
-    public function getCurrentMissionsAction(Request $request) {
+    public function getCurrent_missionsAction(Request $request) {
         $em = $this->getDoctrine()->getManager('service');
         if (sizeof($request->query->all()) == 0)
             $entities = $em->getRepository('DBServiceBundle:CurrentMission')->findBy(array());
@@ -124,12 +124,8 @@ class CurrentMissionController extends LogController {
      *     404 = "Returned when the account not found",
      *   },
      *  parameters={
-     *      {"name"="status", "dataType"="int", "required"=true, "description"="user ID"},
-     *      {"name"="distanceMake", "dataType"="float", "required"=true, "description"="user ID"},
      *      {"name"="idUser", "dataType"="int", "required"=false, "description"="user ID"},
-     *      {"name"="idMission", "dataType"="int", "required"=false, "description"="user ID"},
-     *      {"name"="special", "dataType"="int", "required"=false, "description"="user ID"},
-     *      {"name"="type", "dataType"="int", "required"=true, "description"="user ID"}
+     *      {"name"="idMission", "dataType"="int", "required"=false, "description"="user ID"}
      *  }
      * )
      * 
@@ -138,7 +134,7 @@ class CurrentMissionController extends LogController {
      * @return View|array
      * 
      */
-    public function postCurrentMissionAction(Request $request) {
+    public function postCurrent_missionAction(Request $request) {
         try {
             $em = $this->getDoctrine()->getManager('service');
 
@@ -156,11 +152,7 @@ class CurrentMissionController extends LogController {
             if (!$mission) {
                 throw $this->createNotFoundException('no\'t found Mission');
             }
-            $cuurentmission->setIdMission($idMission);
-            $cuurentmission->setStatus($request->request->get('status'));
-            $cuurentmission->setDistanceMake($request->request->get('distanceMake'));
-            $cuurentmission->set($request->request->get('distance'));
-            $cuurentmission->setDistance($request->request->get('distance'));
+            $cuurentmission->setIdMission($mission);
 
             $em->persist($cuurentmission);
             $em->flush();
@@ -183,10 +175,11 @@ class CurrentMissionController extends LogController {
      *     404 = "Returned when the account not found",
      *   },
      *  parameters={
-     *       {"name"="name", "dataType"="string", "required"=true, "description"="user ID"},
-     *      {"name"="distance", "dataType"="string", "required"=true, "description"="user ID"},
-     *      {"name"="special", "dataType"="int", "required"=false, "description"="user ID"},
-     *      {"name"="type", "dataType"="int", "required"=true, "description"="user ID"}
+     *      {"name"="status", "dataType"="int", "required"=true, "description"="user ID"},
+     *      {"name"="distanceMake", "dataType"="float", "required"=true, "description"="user ID"},
+     *      {"name"="idUser", "dataType"="int", "required"=false, "description"="user ID"},
+     *      {"name"="idMission", "dataType"="int", "required"=false, "description"="user ID"},
+     *      {"name"="timeMake", "dataType"="int", "required"=false, "description"="user ID"}
      *  }
      * )
      * 
@@ -195,7 +188,7 @@ class CurrentMissionController extends LogController {
      * @return View|array
      * 
      */
-    public function putCurrentMissionAction(Request $request, $id) {
+    public function putCurrent_missionAction(Request $request, $id) {
         try {
             $em = $this->getDoctrine()->getManager('service');
             $cuurentmission = $em->getRepository('DBServiceBundle:CurrentMission')->find($id);
@@ -215,15 +208,12 @@ class CurrentMissionController extends LogController {
                     throw $this->createNotFoundException('no\'t found Mission');
                 $cuurentmission->setIdMission($mission);
             }
-            if ($request->request->get('name'))
-                $cuurentmission->setName($request->request->get('name'));
-            if ($request->request->get('special'))
-                $cuurentmission->setSpecial($request->request->get('special'));
-            if ($request->request->get('type'))
-                $cuurentmission->setType($request->request->get('type'));
-            if ($request->request->get('distance'))
-                $cuurentmission->setDistance($request->request->get('distance'));
-
+            if ($request->request->get('status'))
+                $cuurentmission->setStatus($request->request->get('status'));
+            if ($request->request->get('distanceMake'))
+                $cuurentmission->setDistanceMake($request->request->get('distanceMake'));
+            if ($request->request->get('timeMake'))
+                $cuurentmission->setTimeMake($request->request->get('timeMake'));
             $em->persist($cuurentmission);
             $em->flush();
             return $cuurentmission;

@@ -35,7 +35,7 @@ class MissionTypeController extends LogController {
      * 
      * @Rest\View()
      */
-    public function getMissionTypeAction($id) {
+    public function getMission_typeAction($id) {
         $em = $this->getDoctrine()->getManager('service');
         $entity = $em->getRepository('DBServiceBundle:MissionType')->find($id);
         if (!$entity) {
@@ -70,7 +70,7 @@ class MissionTypeController extends LogController {
      * 
      * @Rest\View()
      */
-    public function getMissionTypesAction(Request $request) {
+    public function getMission_typesAction(Request $request) {
         $em = $this->getDoctrine()->getManager('service');
         if (sizeof($request->query->all()) == 0)
             $entities = $em->getRepository('DBServiceBundle:MissionType')->findBy(array());
@@ -130,7 +130,7 @@ class MissionTypeController extends LogController {
      * @return View|array
      * 
      */
-    public function postMissionTypeAction(Request $request) {
+    public function postMission_typeAction(Request $request) {
         try {
             $em = $this->getDoctrine()->getManager('service');
 
@@ -166,7 +166,7 @@ class MissionTypeController extends LogController {
      * @return View|array
      * 
      */
-    public function putMissionTypeAction(Request $request, $id) {
+    public function putMission_typeAction(Request $request, $id) {
         try {
             $em = $this->getDoctrine()->getManager('service');
             $mission = $em->getRepository('DBServiceBundle:MissionType')->find($id);

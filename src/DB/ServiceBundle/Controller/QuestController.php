@@ -2,14 +2,14 @@
 
 namespace DB\ServiceBundle\Controller;
 
-use DB\ServiceBundle\Entity\Mission;
+use DB\ServiceBundle\Entity\Quest;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use DB\ServiceBundle\Controller\LogController;
 use Symfony\Component\HttpFoundation\Request;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use FOS\RestBundle\Controller\Annotations as Rest;
 
-class MissionController extends LogController {
+class QuestController extends LogController {
 
     public function getSecureResourceAction() {
         if (false === $this->get('security.context')->isGranted('IS_AUTHENTICATED_FULLY')) {
@@ -20,26 +20,26 @@ class MissionController extends LogController {
     /**
      * @ApiDoc(
      * resource=true,
-     *  description="Get a Mission instance",
-     *  output = "DB\ServiceBundle\Entity\Mission",
+     *  description="Get a Quest instance",
+     *  output = "DB\ServiceBundle\Entity\Quest",
      *  statusCodes = {
      *     200 = "Returned when successful",
      *     404 = "Returned when the User is not found"
      *   }
      * )
      * 
-     * Get all Profile instance
+     * Get all Quest instance
      * @param int $id Id of the User
      * @return array User
      * @throws NotFoundHttpException when User not exist
      * 
      * @Rest\View()
      */
-    public function getMissionAction($id) {
+    public function getQuestAction($id) {
         $em = $this->getDoctrine()->getManager('service');
-        $entity = $em->getRepository('DBServiceBundle:Mission')->find($id);
+        $entity = $em->getRepository('DBServiceBundle:Quest')->find($id);
         if (!$entity) {
-            throw $this->createNotFoundException('Unable to find User entity');
+            throw $this->createNotFoundException('Unable to find Quest entity');
         }
         return $entity;
     }
@@ -47,7 +47,7 @@ class MissionController extends LogController {
     /**
      * @ApiDoc(
      * resource=true,
-     *  description="Get all Mission instance",
+     *  description="Get all Quest instance",
      *  output = "DB\ServiceBundle\Entity\Profile",
      * filters={
      *      {"name"="order", "dataType"="string"},
@@ -73,10 +73,10 @@ class MissionController extends LogController {
      * 
      * @Rest\View()
      */
-    public function getMissionsAction(Request $request) {
+    public function getQuestsAction(Request $request) {
         $em = $this->getDoctrine()->getManager('service');
         if (sizeof($request->query->all()) == 0)
-            $entities = $em->getRepository('DBServiceBundle:Mission')->findBy(array());
+            $entities = $em->getRepository('DBServiceBundle:Quest')->findBy(array());
         else {
             $var = array();
             $limit = null;
@@ -106,10 +106,10 @@ class MissionController extends LogController {
                         break;
                 }
             }
-            $entities = $em->getRepository('DBServiceBundle:Mission')->my_findBy($var, $orderby, $limit, $offset);
+            $entities = $em->getRepository('DBServiceBundle:Quest')->my_findBy($var, $orderby, $limit, $offset);
         }
         if (!$entities) {
-            throw $this->createNotFoundException('No User found');
+            throw $this->createNotFoundException('No Quest found');
         }
         return $entities;
     }
@@ -117,17 +117,16 @@ class MissionController extends LogController {
     /**
      * @ApiDoc(
      * resource=true,
-     *  description="post a Mission instance",
-     *  output = "DB\UserBundle\Entity\Mission",
+     *  description="post a Quest instance",
+     *  output = "DB\UserBundle\Entity\Quest",
      *  statusCodes = {
      *     200 = "Returned when the request success",
      *     404 = "Returned when the account not found",
      *   },
      *  parameters={
      *      {"name"="name", "dataType"="string", "required"=true, "description"="user ID"},
-     *      {"name"="distance", "dataType"="string", "required"=true, "description"="user ID"},
      *      {"name"="special", "dataType"="int", "required"=false, "description"="user ID"},
-     *      {"name"="type", "dataType"="int", "required"=true, "description"="user ID"}
+     *      {"name"="time", "dataType"="int", "required"=true, "description"="user ID"}
      *  }
      * )
      * 
@@ -136,16 +135,14 @@ class MissionController extends LogController {
      * @return View|array
      * 
      */
-    public function postMissionAction(Request $request) {
+    public function postQuestAction(Request $request) {
         try {
             $em = $this->getDoctrine()->getManager('service');
 
-            $mission = new Mission();
+            $mission = new Quest();
             $mission->setName($request->request->get('name'));
-            $mission->setSpecial($request->request->get('special'));
-            $mission->setType($request->request->get('type'));
+            $mission->setTime($request->request->get('time'));
             $mission->setDistance($request->request->get('distance'));
-
             $em->persist($mission);
             $em->flush();
             return $mission;
@@ -169,8 +166,7 @@ class MissionController extends LogController {
      *  parameters={
      *       {"name"="name", "dataType"="string", "required"=true, "description"="user ID"},
      *      {"name"="distance", "dataType"="string", "required"=true, "description"="user ID"},
-     *      {"name"="special", "dataType"="int", "required"=false, "description"="user ID"},
-     *      {"name"="type", "dataType"="int", "required"=true, "description"="user ID"}
+     *      {"name"="time", "dataType"="int", "required"=true, "description"="user ID"}
      *  }
      * )
      * 
@@ -182,13 +178,11 @@ class MissionController extends LogController {
     public function putMissionAction(Request $request, $id) {
         try {
             $em = $this->getDoctrine()->getManager('service');
-            $mission = $em->getRepository('DBServiceBundle:Mission')->find($id);
+            $mission = $em->getRepository('DBServiceBundle:Quest')->find($id);
             if ($request->request->get('name'))
                 $mission->setName($request->request->get('name'));
-            if ($request->request->get('special'))
-                $mission->setSpecial($request->request->get('special'));
-            if ($request->request->get('type'))
-                $mission->setType($request->request->get('type'));
+            if ($request->request->get('time'))
+                $mission->setTime($request->request->get('time'));
             if ($request->request->get('distance'))
                 $mission->setDistance($request->request->get('distance'));
 

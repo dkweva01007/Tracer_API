@@ -8,13 +8,13 @@ use JMS\Serializer\Annotation\ExclusionPolicy;
 use JMS\Serializer\Annotation\Expose;
 
 /**
- * CurrentMission
+ * CurrentQuest
  *
- * @ORM\Table(name="API_current_mission")
+ * @ORM\Table(name="API_current_quest")
  * @ORM\Entity(repositoryClass="DB\ServiceBundle\Entity\DefaultRepository")
  * @ExclusionPolicy("all")
  */
-class CurrentMission {
+class CurrentQuest {
 
     /**
      * @var integer
@@ -40,13 +40,13 @@ class CurrentMission {
      /**
      * @var integer
      *
-     * @ORM\OneToOne(targetEntity="Mission")
+     * @ORM\OneToOne(targetEntity="Quest")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="id_Mission", referencedColumnName="id")
+     *   @ORM\JoinColumn(name="id_Quest", referencedColumnName="id")
      * })     
      * @Expose
      */
-    private $idMission;
+    private $idQuest;
 
     /**
      * @var integer
@@ -92,8 +92,8 @@ class CurrentMission {
         return $this->idUser;
     }
 
-    public function getIdMission() {
-        return $this->idMission;
+    public function getIdQuest() {
+        return $this->idQuest;
     }
 
     public function getStatus() {
@@ -113,8 +113,8 @@ class CurrentMission {
         $this->idUser = $idUser;
     }
 
-    public function setIdMission(\DB\ServiceBundle\Entity\Mission $idMission) {
-        $this->idMission = $idMission;
+    public function setIdQuest(\DB\ServiceBundle\Entity\Quest $idQuest) {
+        $this->idQuest = $idQuest;
     }
 
     public function setStatus($status) {

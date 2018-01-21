@@ -63,6 +63,7 @@ doctrine:
                 dbname:   "%database_name%"
                 user:     "%database_user%"
                 password: "%database_password%"
+                server_version:   10
                 charset:  UTF8
             login:
                 driver:   pdo_pgsql
@@ -71,6 +72,7 @@ doctrine:
                 dbname:   "%database_name%"
                 user:     "%database_user%"
                 password: "%database_password%"
+                server_version:   10
                 charset:  UTF8
 
     orm:
@@ -81,6 +83,7 @@ doctrine:
                 auto_mapping: false
                 connection:   service
                 mappings:
+                    DBUserBundle: ~
                     DBServiceBundle: ~
                 dql:
                     datetime_functions:

@@ -3,6 +3,7 @@
 namespace DB\ServiceBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use DB\UserBundle\Entity\User;
 use Gedmo\Mapping\Annotation as Gedmo;
 use JMS\Serializer\Annotation\ExclusionPolicy;
 use JMS\Serializer\Annotation\Expose;
@@ -29,7 +30,7 @@ class Profile {
     /**
      * @var \DateTime
      *
-     * @Gedmo\Timestampable(on="change")
+     * @Gedmo\Timestampable(on="update")
      * @ORM\Column(name="updated", type="datetime", nullable=true)
      * @Expose
      */
@@ -38,7 +39,7 @@ class Profile {
     /**
      * @var integer
      *
-     * @ORM\OneToOne(targetEntity="User")
+     * @ORM\OneToOne(targetEntity="DB\UserBundle\Entity\User")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="id_user", referencedColumnName="id")
      * })     
@@ -47,7 +48,7 @@ class Profile {
     private $idUser;
 
     /**
-     * @var integer
+     * @var float
      *
      * @ORM\Column(name="distance", type="float", precision=3, scale=0, nullable=false)
      * @Expose
@@ -55,7 +56,7 @@ class Profile {
     private $distance;
     
     /**
-     * @var integer
+     * @var float
      *
      * @ORM\Column(name="count_time", type="float", precision=2, scale=0, nullable=false)
      * @Expose
@@ -63,7 +64,7 @@ class Profile {
     private $countTime;
     
     /**
-     * @var integer
+     * @var float
      *
      * @ORM\Column(name="average", type="float", precision=2, scale=0, nullable=false)
      * @Expose
@@ -71,7 +72,7 @@ class Profile {
     private $average ;
 
     /**
-     * @var string
+     * @var integer
      *
      * @ORM\Column(name="count_mission_complete", type="integer", nullable=true)
      * @Expose

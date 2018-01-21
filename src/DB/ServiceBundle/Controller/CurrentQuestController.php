@@ -2,14 +2,14 @@
 
 namespace DB\ServiceBundle\Controller;
 
-use DB\ServiceBundle\Entity\Mission;
+use DB\ServiceBundle\Entity\CurrentQuest;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use DB\ServiceBundle\Controller\LogController;
 use Symfony\Component\HttpFoundation\Request;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use FOS\RestBundle\Controller\Annotations as Rest;
 
-class MissionController extends LogController {
+class CurrentQuestController extends LogController {
 
     public function getSecureResourceAction() {
         if (false === $this->get('security.context')->isGranted('IS_AUTHENTICATED_FULLY')) {
@@ -20,8 +20,8 @@ class MissionController extends LogController {
     /**
      * @ApiDoc(
      * resource=true,
-     *  description="Get a Mission instance",
-     *  output = "DB\ServiceBundle\Entity\Mission",
+     *  description="Get a CurrentQuest instance",
+     *  output = "DB\ServiceBundle\Entity\CurrentQuest",
      *  statusCodes = {
      *     200 = "Returned when successful",
      *     404 = "Returned when the User is not found"
@@ -35,11 +35,11 @@ class MissionController extends LogController {
      * 
      * @Rest\View()
      */
-    public function getMissionAction($id) {
+    public function getCurrent_questAction($id) {
         $em = $this->getDoctrine()->getManager('service');
-        $entity = $em->getRepository('DBServiceBundle:Mission')->find($id);
+        $entity = $em->getRepository('DBServiceBundle:CurrentQuest')->find($id);
         if (!$entity) {
-            throw $this->createNotFoundException('Unable to find User entity');
+            throw $this->createNotFoundException('Unable to find CurrentQuest entity');
         }
         return $entity;
     }
@@ -47,16 +47,16 @@ class MissionController extends LogController {
     /**
      * @ApiDoc(
      * resource=true,
-     *  description="Get all Mission instance",
-     *  output = "DB\ServiceBundle\Entity\Profile",
+     *  description="Get all CurrentQuest instance",
+     *  output = "DB\ServiceBundle\Entity\CurrentQuest",
      * filters={
      *      {"name"="order", "dataType"="string"},
      *      {"name"="sort_by", "dataType"="string"},
      *      {"name"="per_page", "dataType"="integer"},
      *      {"name"="page", "dataType"="integer"},
      *      {"name"="idUser[]", "dataType"="int", "description"="User Id"},
-     *      {"name"="distance[]", "dataType"="float" , "description"="distance maked"},
-     *      {"name"="countMissionCount[]", "dataType"="int"}
+     *      {"name"="idQuest[]", "dataType"="int" , "description"="distance maked"},
+     *      {"name"="status[]", "dataType"="float"}
      *  },
      *  statusCodes = {
      *     200 = "Returned when successful",
@@ -64,7 +64,7 @@ class MissionController extends LogController {
      *   }
      * )
      * 
-     * Get all User instance 
+     * Get all CurrentQuest instance 
      * @param int $id Id of the User
      * @return array User
      * @throws NotFoundHttpException when User table is empty
@@ -73,10 +73,10 @@ class MissionController extends LogController {
      * 
      * @Rest\View()
      */
-    public function getMissionsAction(Request $request) {
+    public function getCurrent_questsAction(Request $request) {
         $em = $this->getDoctrine()->getManager('service');
         if (sizeof($request->query->all()) == 0)
-            $entities = $em->getRepository('DBServiceBundle:Mission')->findBy(array());
+            $entities = $em->getRepository('DBServiceBundle:CurrentQuest')->findBy(array());
         else {
             $var = array();
             $limit = null;
@@ -106,10 +106,10 @@ class MissionController extends LogController {
                         break;
                 }
             }
-            $entities = $em->getRepository('DBServiceBundle:Mission')->my_findBy($var, $orderby, $limit, $offset);
+            $entities = $em->getRepository('DBServiceBundle:CurrentQuest')->my_findBy($var, $orderby, $limit, $offset);
         }
         if (!$entities) {
-            throw $this->createNotFoundException('No User found');
+            throw $this->createNotFoundException('No CurrentQuest found');
         }
         return $entities;
     }
@@ -117,17 +117,15 @@ class MissionController extends LogController {
     /**
      * @ApiDoc(
      * resource=true,
-     *  description="post a Mission instance",
-     *  output = "DB\UserBundle\Entity\Mission",
+     *  description="post a CurrentQuest instance",
+     *  output = "DB\UserBundle\Entity\CurrentQuest",
      *  statusCodes = {
      *     200 = "Returned when the request success",
      *     404 = "Returned when the account not found",
      *   },
      *  parameters={
-     *      {"name"="name", "dataType"="string", "required"=true, "description"="user ID"},
-     *      {"name"="distance", "dataType"="string", "required"=true, "description"="user ID"},
-     *      {"name"="special", "dataType"="int", "required"=false, "description"="user ID"},
-     *      {"name"="type", "dataType"="int", "required"=true, "description"="user ID"}
+     *      {"name"="idUser", "dataType"="int", "required"=false, "description"="user ID"},
+     *      {"name"="idQuest", "dataType"="int", "required"=false, "description"="user ID"}
      *  }
      * )
      * 
@@ -136,19 +134,29 @@ class MissionController extends LogController {
      * @return View|array
      * 
      */
-    public function postMissionAction(Request $request) {
+    public function postCurrent_questAction(Request $request) {
         try {
             $em = $this->getDoctrine()->getManager('service');
 
-            $mission = new Mission();
-            $mission->setName($request->request->get('name'));
-            $mission->setSpecial($request->request->get('special'));
-            $mission->setType($request->request->get('type'));
-            $mission->setDistance($request->request->get('distance'));
+            $cuurentmission = new CurrentQuest();
+            $user = $em->getRepository('DBUserBundle:User')->find(
+                    $request->request->get('idUser')
+            );
+            if (!$user) {
+                throw $this->createNotFoundException('no\'t found User');
+            }
+            $cuurentmission->setIdUser($user);
+            $mission = $em->getRepository('DBUserBundle:Quest')->find(
+                    $request->request->get('idQuest')
+            );
+            if (!$mission) {
+                throw $this->createNotFoundException('no\'t found Quest');
+            }
+            $cuurentmission->setIdQuest($mission);
 
-            $em->persist($mission);
+            $em->persist($cuurentmission);
             $em->flush();
-            return $mission;
+            return $cuurentmission;
         } catch (\Doctrine\ORM\ORMException $e) {
             $loLogger = $this->get('logger');
             //$loLogger->critical($e->getMessage());
@@ -160,17 +168,18 @@ class MissionController extends LogController {
     /**
      * @ApiDoc(
      * resource=true,
-     *  description="put a Mission instance",
-     *  output = "DB\DBServiceBundle\Entity\Profile",
+     *  description="put a CurrentQuest instance",
+     *  output = "DB\DBServiceBundle\Entity\CurrentQuest",
      *  statusCodes = {
      *     200 = "Returned when the request success",
      *     404 = "Returned when the account not found",
      *   },
      *  parameters={
-     *       {"name"="name", "dataType"="string", "required"=true, "description"="user ID"},
-     *      {"name"="distance", "dataType"="string", "required"=true, "description"="user ID"},
-     *      {"name"="special", "dataType"="int", "required"=false, "description"="user ID"},
-     *      {"name"="type", "dataType"="int", "required"=true, "description"="user ID"}
+     *      {"name"="status", "dataType"="int", "required"=true, "description"="user ID"},
+     *      {"name"="distanceMake", "dataType"="float", "required"=true, "description"="user ID"},
+     *      {"name"="idUser", "dataType"="int", "required"=false, "description"="user ID"},
+     *      {"name"="idQuest", "dataType"="int", "required"=false, "description"="user ID"},
+     *      {"name"="timeMake", "dataType"="int", "required"=false, "description"="user ID"}
      *  }
      * )
      * 
@@ -179,22 +188,35 @@ class MissionController extends LogController {
      * @return View|array
      * 
      */
-    public function putMissionAction(Request $request, $id) {
+    public function putCurrent_questAction(Request $request, $id) {
         try {
             $em = $this->getDoctrine()->getManager('service');
-            $mission = $em->getRepository('DBServiceBundle:Mission')->find($id);
-            if ($request->request->get('name'))
-                $mission->setName($request->request->get('name'));
-            if ($request->request->get('special'))
-                $mission->setSpecial($request->request->get('special'));
-            if ($request->request->get('type'))
-                $mission->setType($request->request->get('type'));
-            if ($request->request->get('distance'))
-                $mission->setDistance($request->request->get('distance'));
-
-            $em->persist($mission);
+            $cuurentmission = $em->getRepository('DBServiceBundle:CurrentQuest')->find($id);
+            if ($request->request->get('idUser')) {
+                $user = $em->getRepository('DBUserBundle:User')->find(
+                        $request->request->get('idUser')
+                );
+                if (!$user)
+                    throw $this->createNotFoundException('no\'t found User');
+                $cuurentmission->setIdUser($user);
+            }
+            if ($request->request->get('idQuest')) {
+                $mission = $em->getRepository('DBUserBundle:Quest')->find(
+                        $request->request->get('idQuest')
+                );
+                if (!$mission)
+                    throw $this->createNotFoundException('no\'t found Quest');
+                $cuurentmission->setIdMission($mission);
+            }
+            if ($request->request->get('status'))
+                $cuurentmission->setStatus($request->request->get('status'));
+            if ($request->request->get('distanceMake'))
+                $cuurentmission->setDistanceMake($request->request->get('distanceMake'));
+            if ($request->request->get('timeMake'))
+                $cuurentmission->setTimeMake($request->request->get('timeMake'));
+            $em->persist($cuurentmission);
             $em->flush();
-            return $mission;
+            return $cuurentmission;
         } catch (\Doctrine\ORM\ORMException $e) {
             $loLogger = $this->get('logger');
             //$loLogger->critical($e->getMessage());

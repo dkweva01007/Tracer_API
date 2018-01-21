@@ -37,7 +37,7 @@ class Mission {
     /**
      * @var integer
      *
-     * @ORM\Column(name="type", type="int", nullable=false)
+     * @ORM\Column(name="type", type="integer", nullable=false)
      * @Expose
      */
     private $type;
@@ -45,7 +45,7 @@ class Mission {
     /**
      * @var integer
      *
-     * @ORM\Column(name="special", type="int", nullable=true)
+     * @ORM\Column(name="special", type="integer", nullable=true)
      * @Expose
      */
     private $special;
