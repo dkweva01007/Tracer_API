@@ -124,7 +124,11 @@ class ProfileController extends LogController {
      *     404 = "Returned when the account not found",
      *   },
      *  parameters={
-     *      {"name"="userID", "dataType"="int", "required"=true, "description"="user ID"}
+     *      {"name"="userID", "dataType"="int", "required"=true, "description"="user ID"},
+     *      {"name"="distance", "dataType"="float", "required"=true, "description"="distance make"},
+     *      {"name"="countMissionComplete", "dataType"="int", "required"=true, "description"="count Mission Complete"},
+     *      {"name"="countTime", "dataType"="float", "required"=true, "description"="count Mission Complete"},
+     *      {"name"="average", "dataType"="float", "required"=true, "description"="count Mission Complete"}
      *  }
      * )
      * 
@@ -144,6 +148,10 @@ class ProfileController extends LogController {
             if (!$user) {
                 throw $this->createNotFoundException('no\'t found User');
             }
+            $profile->setDistance($request->request->get('distance', 0.000));
+            $profile->setCountMissionComplete($request->request->get('countMissionComplete', 0));
+            $profile->setCountTime($request->request->get('countTime', 0));
+            $profile->setAverage($request->request->get('Average', 0));
             $profile->setIdUser($user);
             $em->persist($profile);
             $em->flush();
@@ -166,8 +174,11 @@ class ProfileController extends LogController {
      *     404 = "Returned when the account not found",
      *   },
      *  parameters={
+     *      {"name"="userID", "dataType"="int", "required"=true, "description"="user ID"},
      *      {"name"="distance", "dataType"="float", "required"=true, "description"="distance make"},
-     *      {"name"="countMissionComplete", "dataType"="int", "required"=true, "description"="count Mission Complete"}
+     *      {"name"="countMissionComplete", "dataType"="int", "required"=true, "description"="count Mission Complete"},
+     *      {"name"="countTime", "dataType"="float", "required"=true, "description"="count Mission Complete"},
+     *      {"name"="average", "dataType"="float", "required"=true, "description"="count Mission Complete"}
      *  }
      * )
      * 

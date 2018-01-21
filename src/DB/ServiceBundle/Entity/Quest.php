@@ -49,9 +49,17 @@ class Quest {
      * @Expose
      */
     private $distance;
+    
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="special", type="integer", nullable=true)
+     * @Expose
+     */
+    private $special;
 
     public function __construct() {
-        $this->$time = 0;
+        $this->time = 0;
         $this->distance = 0;
     }
 
@@ -75,7 +83,11 @@ class Quest {
     public function getDistance() {
         return $this->distance;
     }
-
+    
+    public function getSpecial() {
+        return $this->special;
+    }
+    
     public function setName($name) {
         $this->name = $name;
     }
@@ -86,6 +98,10 @@ class Quest {
 
     public function setDistance($distance) {
         $this->distance = $distance;
+    }
+    
+    public function setSpecial($special) {
+        $this->special = $special;
     }
 
 }

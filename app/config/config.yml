@@ -63,7 +63,6 @@ doctrine:
                 dbname:   "%database_name%"
                 user:     "%database_user%"
                 password: "%database_password%"
-                server_version:   10
                 charset:  UTF8
             login:
                 driver:   pdo_pgsql
@@ -72,7 +71,6 @@ doctrine:
                 dbname:   "%database_name%"
                 user:     "%database_user%"
                 password: "%database_password%"
-                server_version:   10
                 charset:  UTF8
 
     orm:
@@ -87,12 +85,11 @@ doctrine:
                     DBServiceBundle: ~
                 dql:
                     datetime_functions:
-                        year: DoctrineExtensions\Query\Mysql\Year
+                        date_format: DoctrineExtensions\Query\Postgresql\DateFormat
+                        at_time_zone: DoctrineExtensions\Query\Postgresql\AtTimeZoneFunction
                     string_functions:
-                        month: DoctrineExtensions\Query\Mysql\Month
-                        regexp: DoctrineExtensions\Query\Mysql\Regexp
-                    numeric_functions:
-                        round: DoctrineExtensions\Query\Mysql\Round
+                        str_to_date: DoctrineExtensions\Query\Postgresql\StrToDate
+                        count_filter: DoctrineExtensions\Query\Postgresql\CountFilterFunction
             login:
                 auto_mapping: true
                 connection:   login
@@ -101,12 +98,11 @@ doctrine:
                     FOSOAuthServerBundle: ~
                 dql:
                     datetime_functions:
-                        year: DoctrineExtensions\Query\Mysql\Year
+                        date_format: DoctrineExtensions\Query\Postgresql\DateFormat
+                        at_time_zone: DoctrineExtensions\Query\Postgresql\AtTimeZoneFunction
                     string_functions:
-                        month: DoctrineExtensions\Query\Mysql\Month
-                        regexp: DoctrineExtensions\Query\Mysql\Regexp
-                    numeric_functions:
-                        round: DoctrineExtensions\Query\Mysql\Round
+                        str_to_date: DoctrineExtensions\Query\Postgresql\StrToDate
+                        count_filter: DoctrineExtensions\Query\Postgresql\CountFilterFunction
 # Swiftmailer Configuration
 swiftmailer:
     transport: "%mailer_transport%"

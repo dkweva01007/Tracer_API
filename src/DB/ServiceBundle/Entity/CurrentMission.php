@@ -29,7 +29,7 @@ class CurrentMission {
      /**
      * @var integer
      *
-     * @ORM\OneToOne(targetEntity="\DB\UserBundle\Entity\User")
+     * @ORM\ManyToOne(targetEntity="\DB\UserBundle\Entity\User")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="id_user", referencedColumnName="id")
      * })     
@@ -40,7 +40,7 @@ class CurrentMission {
      /**
      * @var integer
      *
-     * @ORM\OneToOne(targetEntity="Mission")
+     * @ORM\ManyToOne(targetEntity="Mission")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="id_Mission", referencedColumnName="id")
      * })     

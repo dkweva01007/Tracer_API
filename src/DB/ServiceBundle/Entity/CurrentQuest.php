@@ -29,7 +29,7 @@ class CurrentQuest {
      /**
      * @var integer
      *
-     * @ORM\OneToOne(targetEntity="\DB\UserBundle\Entity\User")
+     * @ORM\ManyToOne(targetEntity="\DB\UserBundle\Entity\User")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="id_user", referencedColumnName="id")
      * })     
@@ -40,7 +40,7 @@ class CurrentQuest {
      /**
      * @var integer
      *
-     * @ORM\OneToOne(targetEntity="Quest")
+     * @ORM\ManyToOne(targetEntity="Quest")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="id_Quest", referencedColumnName="id")
      * })     
@@ -72,6 +72,14 @@ class CurrentQuest {
      * @Expose
      */
     private $timeMake;
+    
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="special", type="integer", nullable=true)
+     * @Expose
+     */
+    private $special;
 
     public function __construct() {
         $this->timeMake = 0.0;
@@ -108,6 +116,9 @@ class CurrentQuest {
         return $this->timeMake;
     }
 
+    public function getSpecial() {
+        return $this->special;
+    }
     
     public function setIdUser(\DB\UserBundle\Entity\User $idUser) {
         $this->idUser = $idUser;
@@ -129,6 +140,8 @@ class CurrentQuest {
         $this->timeMake = $timeMake;
     }
 
-
+    public function setSpecial($special) {
+        $this->special = $special;
+    }
     
 }

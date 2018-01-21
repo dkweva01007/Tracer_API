@@ -125,7 +125,8 @@ class QuestController extends LogController {
      *   },
      *  parameters={
      *      {"name"="name", "dataType"="string", "required"=true, "description"="user ID"},
-     *      {"name"="special", "dataType"="int", "required"=false, "description"="user ID"},
+     *      {"name"="distance", "dataType"="int", "required"=true, "description"="user ID"},
+     *      {"name"="special", "dataType"="int", "required"=true, "description"="user ID"},
      *      {"name"="time", "dataType"="int", "required"=true, "description"="user ID"}
      *  }
      * )
@@ -143,6 +144,7 @@ class QuestController extends LogController {
             $mission->setName($request->request->get('name'));
             $mission->setTime($request->request->get('time'));
             $mission->setDistance($request->request->get('distance'));
+            $mission->setSpecial($request->request->get('special'));
             $em->persist($mission);
             $em->flush();
             return $mission;
@@ -165,8 +167,9 @@ class QuestController extends LogController {
      *   },
      *  parameters={
      *       {"name"="name", "dataType"="string", "required"=true, "description"="user ID"},
-     *      {"name"="distance", "dataType"="string", "required"=true, "description"="user ID"},
-     *      {"name"="time", "dataType"="int", "required"=true, "description"="user ID"}
+     *      {"name"="distance", "dataType"="float", "required"=true, "description"="user ID"},
+     *      {"name"="special", "dataType"="int", "required"=true, "description"="user ID"},
+     *      {"name"="time", "dataType"="float", "required"=true, "description"="user ID"}
      *  }
      * )
      * 
@@ -185,6 +188,8 @@ class QuestController extends LogController {
                 $mission->setTime($request->request->get('time'));
             if ($request->request->get('distance'))
                 $mission->setDistance($request->request->get('distance'));
+            if ($request->request->get('special'))
+            $mission->setSpecial($request->request->get('special'));
 
             $em->persist($mission);
             $em->flush();

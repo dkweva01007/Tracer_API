@@ -124,8 +124,12 @@ class CurrentQuestController extends LogController {
      *     404 = "Returned when the account not found",
      *   },
      *  parameters={
+     *      {"name"="status", "dataType"="int", "required"=true, "description"="user ID"},
+     *      {"name"="special", "dataType"="int", "required"=true, "description"="user ID"},
+     *      {"name"="distanceMake", "dataType"="float", "required"=true, "description"="user ID"},
      *      {"name"="idUser", "dataType"="int", "required"=false, "description"="user ID"},
-     *      {"name"="idQuest", "dataType"="int", "required"=false, "description"="user ID"}
+     *      {"name"="idQuest", "dataType"="int", "required"=false, "description"="user ID"},
+     *      {"name"="timeMake", "dataType"="int", "required"=false, "description"="user ID"}
      *  }
      * )
      * 
@@ -153,7 +157,14 @@ class CurrentQuestController extends LogController {
                 throw $this->createNotFoundException('no\'t found Quest');
             }
             $cuurentmission->setIdQuest($mission);
-
+            if ($request->request->get('status'))
+                $cuurentmission->setStatus($request->request->get('status'));
+            if ($request->request->get('special'))
+                $cuurentmission->setSpecial($request->request->get('special'));
+            if ($request->request->get('distanceMake'))
+                $cuurentmission->setDistanceMake($request->request->get('distanceMake'));
+            if ($request->request->get('timeMake'))
+                $cuurentmission->setTimeMake($request->request->get('timeMake'));
             $em->persist($cuurentmission);
             $em->flush();
             return $cuurentmission;
@@ -176,6 +187,7 @@ class CurrentQuestController extends LogController {
      *   },
      *  parameters={
      *      {"name"="status", "dataType"="int", "required"=true, "description"="user ID"},
+     *      {"name"="special", "dataType"="int", "required"=true, "description"="user ID"},
      *      {"name"="distanceMake", "dataType"="float", "required"=true, "description"="user ID"},
      *      {"name"="idUser", "dataType"="int", "required"=false, "description"="user ID"},
      *      {"name"="idQuest", "dataType"="int", "required"=false, "description"="user ID"},
@@ -210,6 +222,8 @@ class CurrentQuestController extends LogController {
             }
             if ($request->request->get('status'))
                 $cuurentmission->setStatus($request->request->get('status'));
+            if ($request->request->get('special'))
+                $cuurentmission->setSpecial($request->request->get('special'));
             if ($request->request->get('distanceMake'))
                 $cuurentmission->setDistanceMake($request->request->get('distanceMake'));
             if ($request->request->get('timeMake'))
