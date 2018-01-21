@@ -36,7 +36,7 @@ class UserController extends LogController {
      * @Rest\View()
      */
     public function getUserAction($id) {
-        $em = $this->getDoctrine()->getManager('login');
+        $em = $this->getDoctrine()->getManager('service');
         $entity = $em->getRepository('DBUserBundle:User')->find($id);
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find User entity');
@@ -75,7 +75,7 @@ class UserController extends LogController {
      * @Rest\View()
      */
     public function getUsersAction(Request $request) {
-        $em = $this->getDoctrine()->getManager('login');
+        $em = $this->getDoctrine()->getManager('service');
         if (sizeof($request->query->all()) == 0)
             $entities = $em->getRepository('DBUserBundle:User')->findBy(array(), array('createdDate' => 'DESC'));
         else {
