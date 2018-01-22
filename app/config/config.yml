@@ -64,38 +64,19 @@ doctrine:
                 user:     "%database_user%"
                 password: "%database_password%"
                 charset:  UTF8
-            login:
-                driver:   pdo_pgsql
-                host:     "%database_host%"
-                port:     "%database_port%"
-                dbname:   "%database_name%"
-                user:     "%database_user%"
-                password: "%database_password%"
-                charset:  UTF8
 
     orm:
         auto_generate_proxy_classes: %kernel.debug%
-        default_entity_manager:   login
+        default_entity_manager:   default
         entity_managers:
-            service:
-                auto_mapping: false
+            default:
+                auto_mapping: true
                 connection:   service
                 mappings:
-                    DBUserBundle: ~
-                    DBServiceBundle: ~
-                dql:
-                    datetime_functions:
-                        date_format: DoctrineExtensions\Query\Postgresql\DateFormat
-                        at_time_zone: DoctrineExtensions\Query\Postgresql\AtTimeZoneFunction
-                    string_functions:
-                        str_to_date: DoctrineExtensions\Query\Postgresql\StrToDate
-                        count_filter: DoctrineExtensions\Query\Postgresql\CountFilterFunction
-            login:
-                auto_mapping: true
-                connection:   login
-                mappings:
+                    FOSUserBundle: ~
                     DBUserBundle: ~
                     FOSOAuthServerBundle: ~
+                    DBServiceBundle: ~
                 dql:
                     datetime_functions:
                         date_format: DoctrineExtensions\Query\Postgresql\DateFormat
@@ -140,7 +121,7 @@ fos_rest:
 
 fos_user:
     db_driver: orm
-    firewall_name: api
+    firewall_name: main
     user_class: DB\UserBundle\Entity\User
 
 nelmio_cors:
@@ -175,10 +156,7 @@ stof_doctrine_extensions:
             tree: true
             timestampable: true
             sluggable: true
-        login:
-            tree: true
-            timestampable: true
-            sluggable: true
+
 fos_oauth_server:
     db_driver: orm
     client_class:        DB\UserBundle\Entity\Client

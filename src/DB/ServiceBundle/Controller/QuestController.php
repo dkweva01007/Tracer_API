@@ -36,7 +36,7 @@ class QuestController extends LogController {
      * @Rest\View()
      */
     public function getQuestAction($id) {
-        $em = $this->getDoctrine()->getManager('service');
+        $em = $this->getDoctrine()->getManager();
         $entity = $em->getRepository('DBServiceBundle:Quest')->find($id);
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find Quest entity');
@@ -48,15 +48,16 @@ class QuestController extends LogController {
      * @ApiDoc(
      * resource=true,
      *  description="Get all Quest instance",
-     *  output = "DB\ServiceBundle\Entity\Profile",
+     *  output = "DB\ServiceBundle\Entity\Quest",
      * filters={
      *      {"name"="order", "dataType"="string"},
      *      {"name"="sort_by", "dataType"="string"},
      *      {"name"="per_page", "dataType"="integer"},
      *      {"name"="page", "dataType"="integer"},
-     *      {"name"="idUser[]", "dataType"="int", "description"="User Id"},
-     *      {"name"="distance[]", "dataType"="float" , "description"="distance maked"},
-     *      {"name"="countMissionCount[]", "dataType"="int"}
+     *      {"name"="id[]", "dataType"="int", "description"=" Id"},
+     *      {"name"="time[]", "dataType"="float", "description"=" Id"},
+     *      {"name"="special[]", "dataType"="float" , "description"="distance maked"},
+     *      {"name"="distance[]", "dataType"="float" , "description"="distance maked"}
      *  },
      *  statusCodes = {
      *     200 = "Returned when successful",
@@ -74,7 +75,7 @@ class QuestController extends LogController {
      * @Rest\View()
      */
     public function getQuestsAction(Request $request) {
-        $em = $this->getDoctrine()->getManager('service');
+        $em = $this->getDoctrine()->getManager();
         if (sizeof($request->query->all()) == 0)
             $entities = $em->getRepository('DBServiceBundle:Quest')->findBy(array());
         else {
@@ -125,9 +126,9 @@ class QuestController extends LogController {
      *   },
      *  parameters={
      *      {"name"="name", "dataType"="string", "required"=true, "description"="user ID"},
-     *      {"name"="distance", "dataType"="int", "required"=true, "description"="user ID"},
+     *      {"name"="distance", "dataType"="float", "required"=true, "description"="user ID"},
      *      {"name"="special", "dataType"="int", "required"=true, "description"="user ID"},
-     *      {"name"="time", "dataType"="int", "required"=true, "description"="user ID"}
+     *      {"name"="time", "dataType"="float", "required"=true, "description"="user ID"}
      *  }
      * )
      * 
@@ -138,7 +139,7 @@ class QuestController extends LogController {
      */
     public function postQuestAction(Request $request) {
         try {
-            $em = $this->getDoctrine()->getManager('service');
+            $em = $this->getDoctrine()->getManager();
 
             $mission = new Quest();
             $mission->setName($request->request->get('name'));
@@ -159,8 +160,8 @@ class QuestController extends LogController {
     /**
      * @ApiDoc(
      * resource=true,
-     *  description="put a Mission instance",
-     *  output = "DB\DBServiceBundle\Entity\Profile",
+     *  description="put a Quest instance",
+     *  output = "DB\DBServiceBundle\Entity\Quest",
      *  statusCodes = {
      *     200 = "Returned when the request success",
      *     404 = "Returned when the account not found",
@@ -178,9 +179,9 @@ class QuestController extends LogController {
      * @return View|array
      * 
      */
-    public function putMissionAction(Request $request, $id) {
+    public function putQuestAction(Request $request, $id) {
         try {
-            $em = $this->getDoctrine()->getManager('service');
+            $em = $this->getDoctrine()->getManager();
             $mission = $em->getRepository('DBServiceBundle:Quest')->find($id);
             if ($request->request->get('name'))
                 $mission->setName($request->request->get('name'));

@@ -3,6 +3,7 @@
 namespace DB\ServiceBundle\Controller;
 
 use DB\ServiceBundle\Entity\CurrentQuest;
+use DB\ServiceBundle\Entity\Quest;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use DB\ServiceBundle\Controller\LogController;
 use Symfony\Component\HttpFoundation\Request;
@@ -36,7 +37,7 @@ class CurrentQuestController extends LogController {
      * @Rest\View()
      */
     public function getCurrent_questAction($id) {
-        $em = $this->getDoctrine()->getManager('service');
+        $em = $this->getDoctrine()->getManager();
         $entity = $em->getRepository('DBServiceBundle:CurrentQuest')->find($id);
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find CurrentQuest entity');
@@ -56,7 +57,10 @@ class CurrentQuestController extends LogController {
      *      {"name"="page", "dataType"="integer"},
      *      {"name"="idUser[]", "dataType"="int", "description"="User Id"},
      *      {"name"="idQuest[]", "dataType"="int" , "description"="distance maked"},
-     *      {"name"="status[]", "dataType"="float"}
+     *      {"name"="status[]", "dataType"="int"},
+     *      {"name"="special[]", "dataType"="float"},
+     *      {"name"="distanceMake[]", "dataType"="float"},
+     *      {"name"="timeMake[]", "dataType"="float"}
      *  },
      *  statusCodes = {
      *     200 = "Returned when successful",
@@ -74,7 +78,7 @@ class CurrentQuestController extends LogController {
      * @Rest\View()
      */
     public function getCurrent_questsAction(Request $request) {
-        $em = $this->getDoctrine()->getManager('service');
+        $em = $this->getDoctrine()->getManager();
         if (sizeof($request->query->all()) == 0)
             $entities = $em->getRepository('DBServiceBundle:CurrentQuest')->findBy(array());
         else {
@@ -129,7 +133,7 @@ class CurrentQuestController extends LogController {
      *      {"name"="distanceMake", "dataType"="float", "required"=true, "description"="user ID"},
      *      {"name"="idUser", "dataType"="int", "required"=false, "description"="user ID"},
      *      {"name"="idQuest", "dataType"="int", "required"=false, "description"="user ID"},
-     *      {"name"="timeMake", "dataType"="int", "required"=false, "description"="user ID"}
+     *      {"name"="timeMake", "dataType"="float", "required"=false, "description"="user ID"}
      *  }
      * )
      * 
@@ -140,7 +144,7 @@ class CurrentQuestController extends LogController {
      */
     public function postCurrent_questAction(Request $request) {
         try {
-            $em = $this->getDoctrine()->getManager('service');
+            $em = $this->getDoctrine()->getManager();
 
             $cuurentmission = new CurrentQuest();
             $user = $em->getRepository('DBUserBundle:User')->find(
@@ -150,7 +154,7 @@ class CurrentQuestController extends LogController {
                 throw $this->createNotFoundException('no\'t found User');
             }
             $cuurentmission->setIdUser($user);
-            $mission = $em->getRepository('DBUserBundle:Quest')->find(
+            $mission = $em->getRepository('DBServiceBundle:Quest')->find(
                     $request->request->get('idQuest')
             );
             if (!$mission) {
@@ -191,7 +195,7 @@ class CurrentQuestController extends LogController {
      *      {"name"="distanceMake", "dataType"="float", "required"=true, "description"="user ID"},
      *      {"name"="idUser", "dataType"="int", "required"=false, "description"="user ID"},
      *      {"name"="idQuest", "dataType"="int", "required"=false, "description"="user ID"},
-     *      {"name"="timeMake", "dataType"="int", "required"=false, "description"="user ID"}
+     *      {"name"="timeMake", "dataType"="float", "required"=false, "description"="user ID"}
      *  }
      * )
      * 
@@ -202,7 +206,7 @@ class CurrentQuestController extends LogController {
      */
     public function putCurrent_questAction(Request $request, $id) {
         try {
-            $em = $this->getDoctrine()->getManager('service');
+            $em = $this->getDoctrine()->getManager();
             $cuurentmission = $em->getRepository('DBServiceBundle:CurrentQuest')->find($id);
             if ($request->request->get('idUser')) {
                 $user = $em->getRepository('DBUserBundle:User')->find(

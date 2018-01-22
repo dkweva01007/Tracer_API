@@ -36,7 +36,7 @@ class FriendController extends LogController {
      * @Rest\View()
      */
     public function getFriendAction($id) {
-        $em = $this->getDoctrine()->getManager('service');
+        $em = $this->getDoctrine()->getManager();
         $entity = $em->getRepository('DBServiceBundle:Friend')->find($id);
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find User entity');
@@ -74,7 +74,7 @@ class FriendController extends LogController {
      * @Rest\View()
      */
     public function getFriendsAction(Request $request) {
-        $em = $this->getDoctrine()->getManager('service');
+        $em = $this->getDoctrine()->getManager();
         if (sizeof($request->query->all()) == 0)
             $entities = $em->getRepository('DBServiceBundle:Friend')->findBy(array(), array('updated' => 'DESC'));
         else {
@@ -137,7 +137,7 @@ class FriendController extends LogController {
      */
     public function postFriendAction(Request $request) {
         try {
-            $em = $this->getDoctrine()->getManager('service');
+            $em = $this->getDoctrine()->getManager();
 
             $friend = new Friend();
             $user1 = $em->getRepository('DBUserBundle:User')->find(
@@ -189,7 +189,7 @@ class FriendController extends LogController {
      */
     public function putFriendAction(Request $request, $id) {
         try {
-            $em = $this->getDoctrine()->getManager('service');
+            $em = $this->getDoctrine()->getManager();
             $friend = $em->getRepository('DBServiceBundle:Friend')->find($id);
             if (!$friend) {
                 throw $this->createNotFoundException('no\'t found Friend');

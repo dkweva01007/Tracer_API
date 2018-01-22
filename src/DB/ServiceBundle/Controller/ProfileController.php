@@ -36,7 +36,7 @@ class ProfileController extends LogController {
      * @Rest\View()
      */
     public function getProfileAction($id) {
-        $em = $this->getDoctrine()->getManager('service');
+        $em = $this->getDoctrine()->getManager();
         $entity = $em->getRepository('DBServiceBundle:Profile')->find($id);
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find User entity');
@@ -74,7 +74,7 @@ class ProfileController extends LogController {
      * @Rest\View()
      */
     public function getProfilesAction(Request $request) {
-        $em = $this->getDoctrine()->getManager('service');
+        $em = $this->getDoctrine()->getManager();
         if (sizeof($request->query->all()) == 0)
             $entities = $em->getRepository('DBServiceBundle:Profile')->findBy(array(), array('updated' => 'DESC'));
         else {
@@ -109,7 +109,7 @@ class ProfileController extends LogController {
             $entities = $em->getRepository('DBServiceBundle:Profile')->my_findBy($var, $orderby, $limit, $offset);
         }
         if (!$entities) {
-            throw $this->createNotFoundException('No User found');
+            throw $this->createNotFoundException('No Profile found');
         }
         return $entities;
     }
@@ -124,7 +124,7 @@ class ProfileController extends LogController {
      *     404 = "Returned when the account not found",
      *   },
      *  parameters={
-     *      {"name"="userID", "dataType"="int", "required"=true, "description"="user ID"},
+     *      {"name"="idUser", "dataType"="int", "required"=true, "description"="user ID"},
      *      {"name"="distance", "dataType"="float", "required"=true, "description"="distance make"},
      *      {"name"="countMissionComplete", "dataType"="int", "required"=true, "description"="count Mission Complete"},
      *      {"name"="countTime", "dataType"="float", "required"=true, "description"="count Mission Complete"},
@@ -139,7 +139,7 @@ class ProfileController extends LogController {
      */
     public function postProfileAction(Request $request) {
         try {
-            $em = $this->getDoctrine()->getManager('service');
+            $em = $this->getDoctrine()->getManager();
 
             $profile = new Profile();
             $user = $em->getRepository('DBUserBundle:User')->find(
@@ -151,7 +151,7 @@ class ProfileController extends LogController {
             $profile->setDistance($request->request->get('distance', 0.000));
             $profile->setCountMissionComplete($request->request->get('countMissionComplete', 0));
             $profile->setCountTime($request->request->get('countTime', 0));
-            $profile->setAverage($request->request->get('Average', 0));
+            $profile->setAverage($request->request->get('average', 0));
             $profile->setIdUser($user);
             $em->persist($profile);
             $em->flush();
@@ -174,7 +174,7 @@ class ProfileController extends LogController {
      *     404 = "Returned when the account not found",
      *   },
      *  parameters={
-     *      {"name"="userID", "dataType"="int", "required"=true, "description"="user ID"},
+     *      {"name"="idUser", "dataType"="int", "required"=true, "description"="user ID"},
      *      {"name"="distance", "dataType"="float", "required"=true, "description"="distance make"},
      *      {"name"="countMissionComplete", "dataType"="int", "required"=true, "description"="count Mission Complete"},
      *      {"name"="countTime", "dataType"="float", "required"=true, "description"="count Mission Complete"},
@@ -189,12 +189,12 @@ class ProfileController extends LogController {
      */
     public function putProfileAction(Request $request, $id) {
         try {
-            $em = $this->getDoctrine()->getManager('service');
+            $em = $this->getDoctrine()->getManager();
             $profile = $em->getRepository('DBServiceBundle:Profile')->find($id);
             if (!$profile) {
                 throw $this->createNotFoundException('no\'t found Profile');
             }
-            if ($request->request->get('distance')) {
+            if ($request->request->get('idUser')) {
                 $user = $em->getRepository('DBUserBundle:User')->find(
                         $request->request->get('idUser')
                 );
@@ -209,7 +209,7 @@ class ProfileController extends LogController {
             if ($request->request->get('countTime'))
                 $profile->setCountTime($request->request->get('countTime'));
             if ($request->request->get('average'))
-                $profile->setAverage($request->request->get('Average'));
+                $profile->setAverage($request->request->get('average'));
 
             $em->persist($profile);
             $em->flush();

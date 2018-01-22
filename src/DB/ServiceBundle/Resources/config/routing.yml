@@ -1,18 +1,9 @@
-Service_reservation:
+Service_user:
     type: rest
     resource: 'DB\ServiceBundle\Controller\UserController'
 Service_Profile:
     type: rest
     resource: 'DB\ServiceBundle\Controller\ProfileController'
-Service_Mission:
-    type: rest
-    resource: 'DB\ServiceBundle\Controller\MissionController'
-Service_MissionType:
-    type: rest
-    resource: 'DB\ServiceBundle\Controller\MissionTypeController'
-Service_CurrentMission:
-    type: rest
-    resource: 'DB\ServiceBundle\Controller\CurrentMissionController'
 Service_CurrentQuest:
     type: rest
     resource: 'DB\ServiceBundle\Controller\CurrentQuestController'

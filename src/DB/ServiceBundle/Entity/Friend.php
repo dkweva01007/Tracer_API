@@ -3,7 +3,7 @@
 namespace DB\ServiceBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use DB\UserBundle\Entity\User;
+use FOS\UserBundle\Entity\User as BaseUser;
 use Gedmo\Mapping\Annotation as Gedmo;
 use JMS\Serializer\Annotation\ExclusionPolicy;
 use JMS\Serializer\Annotation\Expose;
@@ -17,11 +17,20 @@ use JMS\Serializer\Annotation\Expose;
  */
 class Friend {
 
+     /**
+     * @var integer
+     *
+     * @ORM\Column(name="id", type="integer", nullable=false)
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     * @Expose
+     */
+    private $id;
+    
     /**
      * @var integer
      *
-     * @ORM\Id
-     * @ORM\OneToOne(targetEntity="DB\UserBundle\Entity\User")
+     * @ORM\ManyToOne(targetEntity="DB\UserBundle\Entity\User")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="id_user1", referencedColumnName="id")
      * })     
@@ -32,8 +41,7 @@ class Friend {
     /**
      * @var integer
      *
-     * @ORM\Id
-     * @ORM\OneToOne(targetEntity="DB\UserBundle\Entity\User")
+     * @ORM\ManyToOne(targetEntity="DB\UserBundle\Entity\User")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="id_user2", referencedColumnName="id")
      * })     
@@ -69,6 +77,10 @@ class Friend {
 
     public function __construct() {
         $this->status = 0;
+    }
+    
+    public function getId() {
+        return $this->id;
     }
 
     /**

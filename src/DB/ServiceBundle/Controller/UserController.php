@@ -36,7 +36,7 @@ class UserController extends LogController {
      * @Rest\View()
      */
     public function getUserAction($id) {
-        $em = $this->getDoctrine()->getManager('service');
+        $em = $this->getDoctrine()->getManager();
         $entity = $em->getRepository('DBUserBundle:User')->find($id);
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find User entity');
@@ -75,7 +75,7 @@ class UserController extends LogController {
      * @Rest\View()
      */
     public function getUsersAction(Request $request) {
-        $em = $this->getDoctrine()->getManager('service');
+        $em = $this->getDoctrine()->getManager();
         if (sizeof($request->query->all()) == 0)
             $entities = $em->getRepository('DBUserBundle:User')->findBy(array(), array('createdDate' => 'DESC'));
         else {
@@ -130,7 +130,7 @@ class UserController extends LogController {
      *      {"name"="current_pswd", "dataType"="string", "required"=true, "description"="current password"},
      *      {"name"="password", "dataType"="string", "required"=true, "description"="new password"},
      *      {"name"="firstName", "dataType"="string", "required"=true, "description"="new first name"},
-     *      {"name"="LastName", "dataType"="string", "required"=true, "description"="new last name"}
+     *      {"name"="lastName", "dataType"="string", "required"=true, "description"="new last name"}
      *  }
      * )
      * 
@@ -148,7 +148,7 @@ class UserController extends LogController {
             if (!$user = $userManager->findUserBy(array('id' => $id)))
                 throw new \Exception('not found ID');
 
-            if (!verification($user, $request->request->get('current_pswd')))
+            if (!$this->verification($user, $request->request->get('current_pswd')))
                 throw new \Exception('Username or Password not valid.');
 
             if ($request->request->get('email'))
@@ -266,8 +266,8 @@ class UserController extends LogController {
      *     404 = "Returned when the account not found",
      *   },
      *  parameters={
-     *      {"name"="username", "dataType"="array", "required"=true, "description"="customer's email"},
-     *      {"name"="password", "dataType"="array", "required"=true, "description"="login password"}
+     *      {"name"="username", "dataType"="string", "required"=true, "description"="customer's email"},
+     *      {"name"="password", "dataType"="string", "required"=true, "description"="login password"}
      *  }
      * )
      * 

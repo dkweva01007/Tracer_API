@@ -92,7 +92,7 @@ class DefaultRepository extends EntityRepository {
             }
             $queryBuilder->where($txt);
         }
-        $queryBuilder->orderBy('a.dateOrder', 'DESC');
+        $queryBuilder->orderBy('a.id', 'DESC');
 
         foreach ((array) $orderby as $key => $value) {
             $queryBuilder->orderBy("a." . $key, $value);
