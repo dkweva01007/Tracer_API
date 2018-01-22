@@ -124,8 +124,8 @@ class FriendController extends LogController {
      *     404 = "Returned when the account not found",
      *   },
      *  parameters={
-     *      {"name"="userId1", "dataType"="int", "required"=true, "description"="user ID"},
-     *      {"name"="userId2", "dataType"="int", "required"=true, "description"="user ID"},
+     *      {"name"="idUser1", "dataType"="int", "required"=true, "description"="user ID"},
+     *      {"name"="idUser2", "dataType"="int", "required"=true, "description"="user ID"},
      *      {"name"="status", "dataType"="int", "required"=true, "description"="user ID"}
      *  }
      * )
@@ -176,8 +176,8 @@ class FriendController extends LogController {
      *     404 = "Returned when the account not found",
      *   },
      *  parameters={
-     *      {"name"="userId1", "dataType"="int", "required"=true, "description"="user ID"},
-     *      {"name"="userId2", "dataType"="int", "required"=true, "description"="user ID"},
+     *      {"name"="idUser1", "dataType"="int", "required"=true, "description"="user ID"},
+     *      {"name"="idUser2", "dataType"="int", "required"=true, "description"="user ID"},
      *      {"name"="status", "dataType"="int", "required"=true, "description"="user ID"}
      *  }
      * )
