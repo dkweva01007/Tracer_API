@@ -128,7 +128,9 @@ class ProfileController extends LogController {
      *      {"name"="distance", "dataType"="float", "required"=true, "description"="distance make"},
      *      {"name"="countMissionComplete", "dataType"="int", "required"=true, "description"="count Mission Complete"},
      *      {"name"="countTime", "dataType"="float", "required"=true, "description"="count Mission Complete"},
-     *      {"name"="average", "dataType"="float", "required"=true, "description"="count Mission Complete"}
+     *      {"name"="average", "dataType"="float", "required"=true, "description"="count Mission Complete"},
+     *      {"name"="xp", "dataType"="float", "required"=true, "description"="player xp"},
+     *      {"name"="level", "dataType"="float", "required"=true, "description"="player level"}
      *  }
      * )
      * 
@@ -152,6 +154,8 @@ class ProfileController extends LogController {
             $profile->setCountMissionComplete($request->request->get('countMissionComplete', 0));
             $profile->setCountTime($request->request->get('countTime', 0));
             $profile->setAverage($request->request->get('average', 0));
+            $profile->setXp($request->request->get('xp', 1));
+            $profile->setLevel($request->request->get('level', 1));
             $profile->setIdUser($user);
             $em->persist($profile);
             $em->flush();
@@ -178,8 +182,9 @@ class ProfileController extends LogController {
      *      {"name"="distance", "dataType"="float", "required"=true, "description"="distance make"},
      *      {"name"="countMissionComplete", "dataType"="int", "required"=true, "description"="count Mission Complete"},
      *      {"name"="countTime", "dataType"="float", "required"=true, "description"="count Mission Complete"},
-     *      {"name"="average", "dataType"="float", "required"=true, "description"="count Mission Complete"}
-     *  }
+     *      {"name"="average", "dataType"="float", "required"=true, "description"="count Mission Complete"},
+     *      {"name"="xp", "dataType"="float", "required"=true, "description"="player xp"},
+     *      {"name"="level", "dataType"="float", "required"=true, "description"="player level"}
      * )
      * 
      * Post action
@@ -210,6 +215,10 @@ class ProfileController extends LogController {
                 $profile->setCountTime($request->request->get('countTime'));
             if ($request->request->get('average'))
                 $profile->setAverage($request->request->get('average'));
+            if ($request->request->get('xp') !== null)
+                $profile->setXp($request->request->get('xp', 1));
+            if ($request->request->get('level') !== null)
+                $profile->setLevel($request->request->get('level', 1));
 
             $em->persist($profile);
             $em->flush();

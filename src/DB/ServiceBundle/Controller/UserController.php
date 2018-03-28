@@ -3,6 +3,7 @@
 namespace DB\ServiceBundle\Controller;
 
 use DB\UserBundle\Entity\User;
+use DB\UserBundle\Entity\Profile;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use DB\ServiceBundle\Controller\LogController;
 use Symfony\Component\HttpFoundation\Request;
@@ -159,7 +160,7 @@ class UserController extends LogController {
                 $user->setLastName($request->request->get('lastName'));
             if ($request->request->get('password'))
                 $user->setPlainPassword($request->request->get('password'));
-            if ($request->request->get('locke'))
+            if ($request->request->get('locked'))
                 $user->setLocked(0); // don't lock the user
             if ($request->request->get('enable'))
                 $user->setEnabled(1);
@@ -247,6 +248,20 @@ class UserController extends LogController {
             $user->setLocked(0); // don't lock the user
             $user->setEnabled(1);
             $userManager->updateUser($user);
+            
+            $em = $this->getDoctrine()->getManager();
+
+            $profile = new Profile();
+            $profile->setDistance(0.000);
+            $profile->setCountMissionComplete(0);
+            $profile->setCountTime(0);
+            $profile->setAverage(0);
+            $profile->setXp(0);
+            $profile->setLevel(1);
+            $profile->setIdUser($user);
+            $em->persist($profile);
+            $em->flush();
+
             return $user;
         } catch (\Doctrine\ORM\ORMException $e) {
             $loLogger = $this->get('logger');

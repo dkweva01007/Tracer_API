@@ -70,6 +70,22 @@ class Profile {
      * @Expose
      */
     private $average ;
+    
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="xp", type="integer", nullable=false)
+     * @Expose
+     */
+    private $xp ;
+    
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="level", type="integer", nullable=false)
+     * @Expose
+     */
+    private $level ;
 
     /**
      * @var integer
@@ -84,6 +100,8 @@ class Profile {
         $this->distance = 0.000;
         $this->average = 0;
         $this->countTime = 0;
+        $this->xp = 0;
+        $this->level = 1;
     }
 
     /**
@@ -133,6 +151,24 @@ class Profile {
     public function getAverage() {
         return $this->average;
     }
+    
+    /**
+     * Get xp
+     *
+     * @return integer 
+     */
+    public function getXp() {
+        return $this->xp;
+    }
+    
+    /**
+     * Get level
+     *
+     * @return integer 
+     */
+    public function getLevel() {
+        return $this->level;
+    }
 
     /**
      * Set distance
@@ -152,6 +188,26 @@ class Profile {
      */
     public function setAverage($average) {
         $this->average = $average;
+    }
+    
+    /**
+     * Set xp
+     *
+     * @param integer $xp
+     * @return Profile
+     */
+    public function setXp($xp) {
+        $this->xp = $xp;
+    }
+    
+    /**
+     * Set level
+     *
+     * @param integer $level
+     * @return Profile
+     */
+    public function setLevel($level) {
+        $this->level = $level;
     }
 
     
