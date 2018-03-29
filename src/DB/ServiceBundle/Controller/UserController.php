@@ -3,7 +3,7 @@
 namespace DB\ServiceBundle\Controller;
 
 use DB\UserBundle\Entity\User;
-use DB\UserBundle\Entity\Profile;
+use DB\ServiceBundle\Entity\Profile;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use DB\ServiceBundle\Controller\LogController;
 use Symfony\Component\HttpFoundation\Request;

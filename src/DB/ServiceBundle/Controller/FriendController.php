@@ -212,7 +212,7 @@ class FriendController extends LogController {
                 }
                 $friend->setIdUser2($user2);
             }
-            if ($request->request->get('status', 0))
+            if ($request->request->get('status') !== null)
                 $friend->setStatus($request->request->get('status', 0));
 
             $em->persist($friend);
