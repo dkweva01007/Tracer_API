@@ -129,8 +129,8 @@ class ProfileController extends LogController {
      *      {"name"="countMissionComplete", "dataType"="int", "required"=true, "description"="count Mission Complete"},
      *      {"name"="countTime", "dataType"="float", "required"=true, "description"="count Mission Complete"},
      *      {"name"="average", "dataType"="float", "required"=true, "description"="count Mission Complete"},
-     *      {"name"="xp", "dataType"="float", "required"=true, "description"="player xp"},
-     *      {"name"="level", "dataType"="float", "required"=true, "description"="player level"}
+     *      {"name"="xp", "dataType"="int", "required"=true, "description"="player xp"},
+     *      {"name"="level", "dataType"="int", "required"=true, "description"="player level"}
      *  }
      * )
      * 
@@ -185,6 +185,7 @@ class ProfileController extends LogController {
      *      {"name"="average", "dataType"="float", "required"=true, "description"="count Mission Complete"},
      *      {"name"="xp", "dataType"="float", "required"=true, "description"="player xp"},
      *      {"name"="level", "dataType"="float", "required"=true, "description"="player level"}
+     *  }
      * )
      * 
      * Post action
