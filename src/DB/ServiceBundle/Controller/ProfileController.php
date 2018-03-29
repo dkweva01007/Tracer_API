@@ -152,7 +152,7 @@ class ProfileController extends LogController {
             }
             $profile->setDistance($request->request->get('distance', 0.000));
             $profile->setCountMissionComplete($request->request->get('countMissionComplete', 0));
-            $profile->setCountTime($request->request->get('countTime', 0));
+            $profile->setCountTime($request->request->get('countTime', 0.00));
             $profile->setAverage($request->request->get('average', 0));
             $profile->setXp($request->request->get('xp', 1));
             $profile->setLevel($request->request->get('level', 1));
@@ -208,14 +208,14 @@ class ProfileController extends LogController {
                     throw $this->createNotFoundException('no\'t found User');
                 $profile->setIdUser($user);
             }
-            if ($request->request->get('distance'))
-                $profile->setDistance($request->request->get('distance'));
-            if ($request->request->get('countMissionComplete'))
-                $profile->setCountMissionComplete($request->request->get('countMissionComplete'));
-            if ($request->request->get('countTime'))
-                $profile->setCountTime($request->request->get('countTime'));
-            if ($request->request->get('average'))
-                $profile->setAverage($request->request->get('average'));
+            if ($request->request->get('distance') !== null)
+                $profile->setDistance($request->request->get('distance', 0.000));
+            if ($request->request->get('countMissionComplete') !== null)
+                $profile->setCountMissionComplete($request->request->get('countMissionComplete', 0));
+            if ($request->request->get('countTime') !== null)
+                $profile->setCountTime($request->request->get('countTime', 0.0));
+            if ($request->request->get('average') !== null)
+                $profile->setAverage($request->request->get('average', 0));
             if ($request->request->get('xp') !== null)
                 $profile->setXp($request->request->get('xp', 1));
             if ($request->request->get('level') !== null)

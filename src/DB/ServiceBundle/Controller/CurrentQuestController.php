@@ -161,14 +161,14 @@ class CurrentQuestController extends LogController {
                 throw $this->createNotFoundException('no\'t found Quest');
             }
             $cuurentmission->setIdQuest($mission);
-            if ($request->request->get('status'))
-                $cuurentmission->setStatus($request->request->get('status'));
-            if ($request->request->get('special'))
-                $cuurentmission->setSpecial($request->request->get('special'));
-            if ($request->request->get('distanceMake'))
-                $cuurentmission->setDistanceMake($request->request->get('distanceMake'));
-            if ($request->request->get('timeMake'))
-                $cuurentmission->setTimeMake($request->request->get('timeMake'));
+            if ($request->request->get('status') !== null)
+                $cuurentmission->setStatus($request->request->get('status', 0));
+            if ($request->request->get('special') !== null)
+                $cuurentmission->setSpecial($request->request->get('special', 0));
+            if ($request->request->get('distanceMake') !== null)
+                $cuurentmission->setDistanceMake($request->request->get('distanceMake', 0.00));
+            if ($request->request->get('timeMake') !== null)
+                $cuurentmission->setTimeMake($request->request->get('timeMake', 0.00));
             $em->persist($cuurentmission);
             $em->flush();
             return $cuurentmission;
@@ -224,14 +224,14 @@ class CurrentQuestController extends LogController {
                     throw $this->createNotFoundException('no\'t found Quest');
                 $cuurentmission->setIdMission($mission);
             }
-            if ($request->request->get('status'))
-                $cuurentmission->setStatus($request->request->get('status'));
-            if ($request->request->get('special'))
-                $cuurentmission->setSpecial($request->request->get('special'));
-            if ($request->request->get('distanceMake'))
-                $cuurentmission->setDistanceMake($request->request->get('distanceMake'));
-            if ($request->request->get('timeMake'))
-                $cuurentmission->setTimeMake($request->request->get('timeMake'));
+            if ($request->request->get('status') !== null)
+                $cuurentmission->setStatus($request->request->get('status', 0));
+            if ($request->request->get('special') !== null)
+                $cuurentmission->setSpecial($request->request->get('special', 0));
+            if ($request->request->get('distanceMake') !== null)
+                $cuurentmission->setDistanceMake($request->request->get('distanceMake', 0.000));
+            if ($request->request->get('timeMake') !== null)
+                $cuurentmission->setTimeMake($request->request->get('timeMake', 0.00));
             $em->persist($cuurentmission);
             $em->flush();
             return $cuurentmission;

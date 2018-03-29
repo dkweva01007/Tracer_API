@@ -143,9 +143,9 @@ class QuestController extends LogController {
 
             $mission = new Quest();
             $mission->setName($request->request->get('name'));
-            $mission->setTime($request->request->get('time'));
-            $mission->setDistance($request->request->get('distance'));
-            $mission->setSpecial($request->request->get('special'));
+            $mission->setTime($request->request->get('time',0.00));
+            $mission->setDistance($request->request->get('distance', 0.000));
+            $mission->setSpecial($request->request->get('special', 0));
             $em->persist($mission);
             $em->flush();
             return $mission;
@@ -185,12 +185,12 @@ class QuestController extends LogController {
             $mission = $em->getRepository('DBServiceBundle:Quest')->find($id);
             if ($request->request->get('name'))
                 $mission->setName($request->request->get('name'));
-            if ($request->request->get('time'))
+            if ($request->request->get('time') !== null)
                 $mission->setTime($request->request->get('time'));
-            if ($request->request->get('distance'))
-                $mission->setDistance($request->request->get('distance'));
-            if ($request->request->get('special'))
-            $mission->setSpecial($request->request->get('special'));
+            if ($request->request->get('distance') !== null)
+                $mission->setDistance($request->request->get('distance', 0.000));
+            if ($request->request->get('special') !== null)
+            $mission->setSpecial($request->request->get('special', 0) );
 
             $em->persist($mission);
             $em->flush();
