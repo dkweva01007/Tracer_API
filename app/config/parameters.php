@@ -9,16 +9,13 @@ $container->setParameter('database_password',  getenv('DATABASE_PASSWORD')  ?: '
 $container->setParameter('mailer_transport',  getenv('MAILER_TRANSPORT')  ?: 'smtp') ;
 $container->setParameter('mailer_host',       getenv('MAILER_HOST')       ?: 'ssl0.ovh.net') ;
 $container->setParameter('mailer_port',       getenv('MAILER_PORT')       ?: '587') ;
-$container->setParameter('mailer_user',       getenv('MAILER_USER')       ?: 'cap-adrenaline.com') ;
+$container->setParameter('mailer_user',       getenv('MAILER_USER')       ?: 'johann.marie-reine@cap-adrenaline.com') ;
 $container->setParameter('mailer_encryption', getenv('MAILER_ENCRYPTION') ?: 'tls') ;
-$container->setParameter('mailer_password',   getenv('MAILER_PASSWORD')   ?: 'hjPi7CAGHOMp') ;
+$container->setParameter('mailer_password',   getenv('MAILER_PASSWORD')   ?: 'YyD6coHgH8Lg') ;
 $container->setParameter('mail_backup',       getenv('MAILER_BACKUP')     ?: 'Maildakotabox2@gmail.com') ;
 $container->setParameter('mailer_develloper', getenv('MAILER_DEVELOPPER') ?: 'johann.marie-reine@cap-adrenaline.com') ;
-$container->setParameter('mailer_debug',      '%mailer_develloper%') ;
+$container->setParameter('mailer_debug',      null) ;
 $container->setParameter('mailer_logs',       '%mailer_develloper%') ;
-
-$container->setParameter('locale',            getenv('locale')            ?: 'zn') ;
-
 
 $container->setParameter('secret',            getenv('SECRET')            ?: 'ThisTokenIsNotSoSecretChangeIt') ;
 
