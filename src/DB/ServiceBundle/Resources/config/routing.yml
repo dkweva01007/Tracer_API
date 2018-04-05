@@ -13,3 +13,6 @@ Service_Quest:
 Service_Friend:
     type: rest
     resource: 'DB\ServiceBundle\Controller\FriendController'
+Service_Check:
+    type: rest
+    resource: 'DB\ServiceBundle\Controller\CkeckController'
