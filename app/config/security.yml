@@ -25,9 +25,9 @@ security:
             anonymous:  true
         api:
             pattern:   ^/api/v1
-            fos_oauth:  false
+            fos_oauth:  true
             stateless:  true
-            anonymous:  true
+            anonymous:  false
         api_doc:
             pattern:    ^/api/doc$
             anonymous: true
